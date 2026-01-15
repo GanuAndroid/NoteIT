@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Notes</title>
+    <link rel="stylesheet" href="/CSS/notestyle.css">
+</head>
+
+<body>
+    <div class="page-container">
+
+        <div class="header">
+            <h1>My Notes</h1>
+            <div class="header-right">
+                <button class="btn" onclick="createNewNoteDialog()">+ New Note</button>
+
+                <div class="profile-menu-container">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile"
+                        class="profile-icon" id="profileIcon">
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div id="userName" class="dropdown-item">User Name</div>
+                        <div class="dropdown-item" onclick="logout()">Logout</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search notes...">
+        </div>
+
+        <div class="sort-filter">
+    <div>Sort by: <b>Date</b> | Title</div>
+    <div>Filter by: Tags | Categories</div>
+    <div class="view-toggle">
+        <button id="toggleViewBtn" class="btn btn-secondary">
+            📋 List View
+        </button>
+    </div>
+</div>
+
+        
+
+        <div class="notes" id="notesList">
+            <!-- Notes will be populated here -->
+        </div>
+
+        <!-- New/Update Note Modal -->
+        <div class="modal" id="noteModal">
+            <div class="modal-content">
+                <h3 id="modalTitle">Create New Note</h3>
+                <input type="hidden" id="noteId">
+                <input type="text" id="noteTitle" placeholder="Title">
+                <textarea id="noteBody" rows="5" placeholder="Note content..."></textarea>
+                <button class="btn" id="modalSaveBtn">Save Note</button>
+                <button class="btn" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+
+
+        <!-- View Note Modal -->
+        <div class="modal" id="viewNoteModal">
+            <div class="modal-content view-note-modal">
+                <div class="modal-header">
+                    <h3 id="viewNoteTitle">Note Title</h3>
+                </div>
+                <div class="modal-body">
+                    <p id="viewNoteContent">Note content goes here...</p>
+                </div>
+                <div class="modal-footer">
+                    <small id="viewNoteDate">Date</small>
+                    <button class="btn" onclick="closeViewModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/JS/notes.js"></script>
+   
+</body>
+
+</html>
