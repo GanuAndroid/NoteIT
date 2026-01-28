@@ -12,8 +12,14 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+
+require("dotenv").config();
+
+//mongoose.connect(process.env.MONGO_URI)
 // Connect MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/authDB", {
+
+
+mongoose.connect(process.env.MONGO_ATLAS, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
