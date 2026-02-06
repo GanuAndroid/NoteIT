@@ -7,7 +7,11 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
 
-
+router.get("/config", (req, res) => {
+  res.json({
+    BACKEND_URL: process.env.BACKEND_URL
+  });
+});
 
 
 router.post("/register", async (req, res) => {

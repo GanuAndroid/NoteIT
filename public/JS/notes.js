@@ -54,7 +54,7 @@
         }
 
 
-        const API = "http://localhost:5000/api/notes";
+        const API = "http://103.212.135.69:5000/api/notes";
 
         async function saveNote() {
             const title = noteTitleInput.value
