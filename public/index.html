@@ -309,7 +309,7 @@
 
   
   <script>
-    const userDataString = localStorage.getItem("user");
+    const userDataString = localStorage.getItem("data");
     if (userDataString) {
       window.location.href = "notelist.html";
     }
@@ -461,7 +461,10 @@ sendBtn.addEventListener('click', () => {
           if (res.status === 200) {
             document.getElementById("loginMsg").innerText = data.message;
             document.getElementById("loginMsg").className = "msg";
-            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("data", JSON.stringify(data.data));
+
+           console.log("User data saved to localStorage:", JSON.stringify(data)); // Debugging line
+
             loginForm.reset();
 
             // Optional: Show success message for a moment before redirect

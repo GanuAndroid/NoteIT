@@ -34,7 +34,7 @@
         let currentNotes = [];
 
         // Set logged-in user's name
-        const user = JSON.parse(localStorage.getItem("user"));
+        const user = JSON.parse(localStorage.getItem("data"));
         if (user) {
             userNameDiv.textContent = user.name;
         } else {
@@ -63,7 +63,7 @@
                 alert("Please fill out title and content.");
                 return;
             }
-            const userDataString = localStorage.getItem("user");
+            const userDataString = localStorage.getItem("data");
             const user = JSON.parse(userDataString);
             const newNote = {
                 userId: user.id, title, content, date: new Date().toISOString()
@@ -95,7 +95,7 @@
             const noteId = noteIdString
             const title = noteTitleInput.value
             const content = noteBodyInput.value
-            const user = JSON.parse(localStorage.getItem("user"));
+            const user = JSON.parse(localStorage.getItem("data"));
 
             try {
                 const response = await fetch(`${API}/${user.id}/${noteIdString}`, {
@@ -122,8 +122,9 @@
 
         async function deleteNote(noteIdString) {
             const noteId = noteIdString
+            const user = JSON.parse(localStorage.getItem("data"));
             try {
-                const response = await fetch(`${API}/${noteIdString}`, {
+                const response = await fetch(`${API}/${user.id}/${noteIdString}`, {
                     method: "DELETE",
                 });
 
@@ -157,7 +158,7 @@
         });
 
         function logout() {
-            localStorage.removeItem("user");
+            localStorage.removeItem("data");
             window.location.href = "index.html";
         }
         function openViewModal(note) {
@@ -190,7 +191,7 @@
     if (!noteEl) return;
 
     const noteId = noteEl.dataset.id;
-    const note = currentNotes.find(n => n._id === noteId);
+    const note = currentNotes.find(n => n.id === noteId);
     if (!note) return;
 
     // ✏️ Edit
@@ -227,7 +228,7 @@
             modalSaveBtn.textContent = "Update Note";
             noteTitleInput.value = note.title;
             noteBodyInput.value = note.content;
-            hiddenNoteId.value = note._id;
+            hiddenNoteId.value = note.id;
             noteTitleInput.disabled = false;
             noteBodyInput.disabled = false;
             noteModal.style.display = "flex";
@@ -239,20 +240,28 @@
             noteTitleInput.disabled = true;
             noteBodyInput.value = note.content;
             noteBodyInput.disabled = true;
-            hiddenNoteId.value = note._id;
+            hiddenNoteId.value = note.id;
             noteModal.style.display = "flex";
         }
 
 
     function renderNotes() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("data"));
+
+    console.log('User data from localStorage:', user);
+
+    if (!user || !user.id) {
+        console.error("User ID is missing!");
+        return;  // Exit if user data or user ID is missing
+    }
 
     fetch(`${API}/user/${user.id}`)
         .then(res => {
             if (!res.ok) throw new Error("Failed to fetch notes");
             return res.json();
         })
-        .then(notes => {
+        .then(data => {
+             const notes = data.data
             currentNotes = notes; // ✅ store notes globally
 
             if (!notes.length) {
@@ -262,7 +271,7 @@
             }
 
             notesList.innerHTML = notes.map(note => `
-                <div class="note" data-id="${note._id}">
+                <div class="note" data-id="${note.id}">
                     <div class="note-content">
                         <h3>${note.title}</h3>
                         <small>
