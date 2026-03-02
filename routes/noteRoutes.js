@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Note = require("../models/note"); // correct relative path
 const SharedNote = require("../models/sharedNotes");
+const User = require("../models/user")
+
 
 // Create a new note
 router.post("/", async (req, res) => {
@@ -277,6 +279,7 @@ router.post("/share-note", async (req, res) => {
     // 1️⃣ Validate input
     if (!noteId || !ownerId || !identifier) {
       return res.status(400).json({
+        status: "error",
         message: "noteId, ownerId and identifier are required",
       });
     }
@@ -284,20 +287,22 @@ router.post("/share-note", async (req, res) => {
     // 2️⃣ Check note exists
     const note = await Note.findById(noteId);
     if (!note) {
-      return res.status(404).json({ message: "Note not found" });
+      return res.status(404).json({
+        status: "error",
+        message: "Note not found",
+      });
     }
 
     // 3️⃣ Verify ownership
     if (note.userId.toString() !== ownerId) {
       return res.status(403).json({
-         status: "error",
-        message: "You are not owner of this note",
+        status: "error",
+        message: "You are not the owner of this note",
       });
     }
 
     // 4️⃣ Detect if identifier is email or mobile
     let query = {};
-
     if (identifier.includes("@")) {
       query.email = identifier;
     } else {
@@ -308,7 +313,7 @@ router.post("/share-note", async (req, res) => {
 
     if (!userToShare) {
       return res.status(404).json({
-         status: "error",
+        status: "error",
         message: "User not found with this email/mobile",
       });
     }
@@ -329,7 +334,7 @@ router.post("/share-note", async (req, res) => {
 
     if (existing) {
       return res.status(400).json({
-         status: "error",
+        status: "error",
         message: "Note already shared with this user",
       });
     }
@@ -345,20 +350,76 @@ router.post("/share-note", async (req, res) => {
     await sharedNote.save();
 
     return res.status(200).json({
-         status: "success",
+      status: "success",
       message: "Note shared successfully",
-      sharedTo: {
-        id: userToShare._id,
-        name: userToShare.name,
-        mobile: userToShare.mobile,
-        email: userToShare.email,
+      data: {
+        shareId: sharedNote._id,
+        noteId: note._id,
+        title: note.title,
+        permission: sharedNote.permission,
+        sharedAt: sharedNote.createdAt,
+        sharedBy: {
+          id: ownerId,
+        },
+        sharedTo: {
+          id: userToShare._id,
+          name: userToShare.name,
+          mobile: userToShare.mobile,
+          email: userToShare.email,
+        },
       },
-      sharedAt: sharedNote.createdAt,
     });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+});
+
+
+router.delete("/revoke-share/:shareId/:ownerId", async (req, res) => {
+  try {
+    const { shareId, ownerId } = req.params;
+
+    if (!shareId || !ownerId) {
+      return res.status(400).json({
+        status: "error",
+        message: "shareId and ownerId are required"
+      });
+    }
+
+    const sharedNote = await SharedNote.findById(shareId);
+
+    if (!sharedNote) {
+      return res.status(404).json({
+        status: "error",
+        message: "Shared record not found"
+      });
+    }
+
+    if (sharedNote.sharedBy.toString() !== ownerId) {
+      return res.status(403).json({
+        status: "error",
+        message: "Only owner can revoke access"
+      });
+    }
+
+    await SharedNote.findByIdAndDelete(shareId);
+
+    return res.status(200).json({
+      status: "success",
+      message: "Access revoked successfully"
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: error.message
+    });
   }
 });
 
