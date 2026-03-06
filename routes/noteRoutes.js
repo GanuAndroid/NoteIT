@@ -340,36 +340,59 @@ router.post("/share-note", async (req, res) => {
     }
 
     // 7️⃣ Create share entry
-    const sharedNote = new SharedNote({
-      noteId,
-      sharedBy: ownerId,
-      sharedTo: userToShare._id,
-      permission: permission || "read",
-    });
+   // 7️⃣ Create share entry
+const sharedNote = new SharedNote({
+  noteId,
+  sharedBy: ownerId,
+  sharedTo: userToShare._id,
+  permission: permission || "read",
+});
 
-    await sharedNote.save();
+await sharedNote.save();
 
-    return res.status(200).json({
-      status: "success",
-      message: "Note shared successfully",
-      data: {
-        shareId: sharedNote._id,
-        noteId: note._id,
-        title: note.title,
-        permission: sharedNote.permission,
-        sharedAt: sharedNote.createdAt,
-        sharedBy: {
-          id: ownerId,
-        },
-        sharedTo: {
-          id: userToShare._id,
-          name: userToShare.name,
-          mobile: userToShare.mobile,
-          email: userToShare.email,
-        },
-      },
-    });
+// 🔥 Populate just like shared-notes list
+const populatedShare = await SharedNote.findById(sharedNote._id)
+  .populate("noteId")
+  .populate("sharedBy", "name mobile email")
+  .populate("sharedTo", "name mobile email");
 
+// Format exactly like shared-notes response
+const isSharedByMe = populatedShare.sharedBy._id.toString() === ownerId;
+
+const formattedData = {
+  shareId: populatedShare._id,
+  noteId: populatedShare.noteId?._id,
+  title: populatedShare.noteId?.title,
+  contentPreview: populatedShare.noteId?.content?.substring(0, 100),
+  noteCreatedAt:
+    populatedShare.noteId?.createdAt ||
+    populatedShare.noteId?.date,
+
+  sharedAt: populatedShare.createdAt,
+  permission: populatedShare.permission,
+
+  sharedType: isSharedByMe
+    ? "shared_by_me"
+    : "shared_to_me",
+
+  sharedBy: {
+    id: populatedShare.sharedBy?._id,
+    name: populatedShare.sharedBy?.name,
+    mobile: populatedShare.sharedBy?.mobile,
+  },
+
+  sharedTo: {
+    id: populatedShare.sharedTo?._id,
+    name: populatedShare.sharedTo?.name,
+    mobile: populatedShare.sharedTo?.mobile,
+  },
+};
+
+return res.status(200).json({
+  status: "success",
+  message: "Note shared successfully",
+  data: formattedData,
+});
   } catch (error) {
     console.error(error);
     return res.status(500).json({
