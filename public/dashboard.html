@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head><style>html { zoom: 0.9; }</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CloudNotes - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#8b5cf6",
+                "background-light": "#fdfcff",
+                "background-dark": "#1a1625",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {
+                "DEFAULT": "0.5rem",
+                "lg": "0.5rem",
+                "xl": "1rem",
+                "full": "9999px"
+              },
+            },
+          },
+        }
+    </script>
+<style>
+    html { zoom: 0.9; }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased relative">
+<div class="flex flex-col min-h-screen">
+<header class="bg-white dark:bg-slate-900 border-b border-primary/10 sticky top-0 z-30">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row items-center py-4 md:py-6 gap-6 justify-between">
+<!-- Logo -->
+<div class="flex items-center gap-2 shrink-0">
+<h1 class="text-primary text-2xl md:text-3xl font-black tracking-tight uppercase">CloudNotes</h1>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest hidden sm:block">Notes</p>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-wrap justify-center items-center gap-2 bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-xl shrink-0" id="mainNav">
+<a href="#" class="nav-tab active flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20 transition-all" data-tab="notes">
+<span class="material-symbols-outlined fill-[1] text-[20px]">description</span>
+<span class="text-sm font-bold hidden sm:block">Notes</span>
+</a>
+<a href="#" class="nav-tab flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-slate-600 hover:bg-white hover:text-primary transition-all" data-tab="favorites">
+<span class="material-symbols-outlined text-[20px]">star</span>
+<span class="text-sm font-bold hidden sm:block">Favorites</span>
+</a>
+<a href="#" class="nav-tab flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-slate-600 hover:bg-white hover:text-primary transition-all" data-tab="shared">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-sm font-bold hidden sm:block">Shared</span>
+</a>
+<a href="profile.html" class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-slate-600 hover:bg-white hover:text-primary transition-all select-none">
+    <span class="material-symbols-outlined text-[20px]">account_circle</span>
+    <span class="text-sm font-bold hidden sm:block">Profile</span>
+</a>
+</nav>
+</div>
+</div>
+</header>
+<!-- Search Bar Section -->
+<div class="bg-white dark:bg-slate-900 border-b border-primary/5 py-8 md:py-10">
+<div class="max-w-3xl mx-auto px-4 text-center flex flex-col sm:flex-row gap-4 items-center">
+<div class="relative group w-full">
+<span class="absolute left-6 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-2xl">search</span>
+<input id="searchInput" class="w-full pl-16 pr-8 py-4 sm:py-5 bg-slate-50 dark:bg-slate-800 border-2 border-transparent rounded-xl text-base sm:text-lg focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all shadow-sm outline-none" placeholder="Search your thoughts..." type="text"/>
+</div>
+<button id="toggleViewBtn" class="shrink-0 p-4 sm:p-5 rounded-xl bg-slate-50 text-slate-500 hover:text-primary hover:bg-primary/5 transition-all outline-none border-2 border-transparent" title="Toggle View">
+    📋 List View
+</button>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+<!-- Header Section with Title and Add Button -->
+<div class="flex items-center justify-between mb-8 md:mb-10">
+<div class="flex flex-col">
+<h2 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Recent Notes</h2>
+<p class="text-slate-500 text-sm">Organize your thoughts and workflows</p>
+</div>
+<button onclick="createNewNoteDialog()" class="flex items-center justify-center gap-2 bg-primary text-white px-6 md:px-8 py-3 rounded-lg font-bold shadow-lg shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
+<span class="material-symbols-outlined">add</span>
+<span class="hidden sm:inline">New Note</span>
+</button>
+</div>
+<!-- Grid Content -->
+<section class="pb-12">
+<div id="notesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Notes injected here by JS -->
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="mt-auto bg-white dark:bg-slate-900 border-t border-primary/10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+<div class="flex items-center gap-2">
+<h4 class="text-primary text-xl font-black tracking-tight uppercase">CloudNotes</h4>
+<span class="text-slate-400 text-sm">© 2024 CloudNotes. All rights reserved.</span>
+</div>
+<div class="flex items-center gap-8">
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+<!-- Modals -->
+<!-- Create/Update Note Modal -->
+<div id="noteModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col transform transition-all">
+        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <h3 id="modalTitle" class="text-lg font-black text-slate-800">Create New Note</h3>
+            <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 transition"><span class="material-symbols-outlined">close</span></button>
+        </div>
+        <div class="p-6 flex flex-col gap-4">
+            <input type="hidden" id="noteId">
+            <input type="text" id="noteTitle" placeholder="Note Title" class="w-full text-lg font-bold text-slate-800 placeholder-slate-400 focus:outline-none border-b-2 border-transparent focus:border-primary/30 pb-2 transition">
+            <textarea id="noteBody" rows="6" placeholder="Start typing your note here..." class="w-full resize-none text-base text-slate-600 placeholder-slate-400 focus:outline-none leading-relaxed border border-transparent focus:border-slate-100 p-2 rounded block"></textarea>
+        </div>
+        <div class="px-6 py-4 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+            <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl text-slate-600 font-bold hover:bg-slate-100 transition">Cancel</button>
+            <button id="modalSaveBtn" class="px-5 py-2.5 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 shadow-md transition">Save Note</button>
+        </div>
+    </div>
+</div>
+
+<!-- View Note Modal -->
+<div id="viewNoteModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col transform transition-all max-h-[80vh]">
+        <div class="px-8 py-6 border-b border-slate-100 flex flex-col gap-2 relative bg-slate-50/50">
+            <button onclick="closeViewModal()" class="absolute right-6 top-6 text-slate-400 hover:text-red-500 bg-white shadow-sm border border-slate-100 p-2 rounded-xl transition-all active:scale-95"><span class="material-symbols-outlined text-xl block">close</span></button>
+            <h3 id="viewNoteTitle" class="text-2xl font-black text-slate-800 pr-12 leading-tight">Note Title</h3>
+        </div>
+        <div class="p-0 overflow-y-auto flex-1">
+            <div class="p-8 pb-4">
+                <p id="viewNoteContent" class="text-slate-600 text-lg leading-relaxed whitespace-pre-wrap">Note content goes here...</p>
+            </div>
+            
+            <div id="viewNoteDetails" class="hidden border-t border-slate-100 bg-slate-50/30">
+                <div class="p-8 space-y-6">
+                    <!-- Dates section -->
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-3 text-slate-500">
+                             <span class="material-symbols-outlined text-[18px]">schedule</span>
+                             <span class="text-sm font-bold">Created: <span id="viewDetailCreated" class="font-medium"></span></span>
+                        </div>
+                        <div class="flex items-center gap-3 text-slate-500">
+                             <span class="material-symbols-outlined text-[18px]">history</span>
+                             <span class="text-sm font-bold">Shared: <span id="viewDetailSharedDate" class="font-medium"></span></span>
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-slate-100 w-full"></div>
+
+                    <!-- Identities Section -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-3">
+                            <span class="text-xs uppercase font-black text-slate-400 tracking-widest block mb-1">Shared By</span>
+                            <div class="flex items-start gap-4">
+                                <div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined">person</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span id="viewDetailSharedBy" class="text-base font-black text-slate-800">Ganesh</span>
+                                    <span id="viewDetailSharedByMobile" class="text-xs font-bold text-slate-500">8083200081</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <span class="text-xs uppercase font-black text-slate-400 tracking-widest block mb-1">Shared To</span>
+                            <div class="flex items-start gap-4">
+                                <div class="size-10 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+                                    <span class="material-symbols-outlined">person</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span id="viewDetailSharedTo" class="text-base font-black text-slate-800">Amit Sharma</span>
+                                    <span id="viewDetailSharedToMobile" class="text-xs font-bold text-slate-500">9852206685</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="h-px bg-slate-100 w-full"></div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Permission:</span>
+                        <span class="text-xs font-black text-primary px-3 py-1 bg-primary/10 rounded-lg">READ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-8 py-5 border-t border-slate-100 flex justify-between items-center bg-slate-50">
+            <button id="viewModalRevokeBtn" class="hidden px-8 py-3 rounded-2xl bg-red-600 text-white font-black hover:bg-red-700 shadow-lg shadow-red-200 transition-all active:scale-95 flex items-center gap-2">
+                <span class="material-symbols-outlined text-xl">person_remove</span>
+                <span>Revoke Access</span>
+            </button>
+            <button onclick="closeViewModal()" class="px-8 py-3 rounded-2xl bg-slate-200 text-slate-700 font-bold hover:bg-slate-300 transition-all active:scale-95 ml-auto">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Share Note Modal -->
+<div id="shareModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col transform transition-all shadow-primary/20 border border-primary/10">
+        <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <div class="flex items-center gap-3">
+                <div class="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined">share</span>
+                </div>
+                <h3 class="text-xl font-black text-slate-800">Share Note</h3>
+            </div>
+            <button onclick="closeShareModal()" class="size-8 flex items-center justify-center rounded-full text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all active:scale-95"><span class="material-symbols-outlined text-xl">close</span></button>
+        </div>
+        <div class="p-8 flex flex-col gap-6">
+            <div class="space-y-2">
+                <label class="text-xs font-black uppercase tracking-widest text-slate-400 ml-1">Recipient Identifier</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-4 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-xl">alternate_email</span>
+                    </div>
+                    <input type="hidden" id="shareNoteId">
+                    <input type="text" id="shareToInput" placeholder="Enter Email or Mobile" class="w-full bg-slate-50 text-base font-bold text-slate-800 placeholder-slate-400 outline-none border-2 border-slate-100 focus:border-primary/30 p-4 pl-12 rounded-2xl transition-all">
+                </div>
+                <p class="text-[11px] text-slate-400 font-medium px-2 italic">Note: The recipient must have a registered NoteIT account.</p>
+            </div>
+            
+            <div id="shareStatus" class="hidden px-4 py-3 rounded-xl text-sm font-bold text-center"></div>
+
+            <div class="bg-primary/5 rounded-2xl p-4 border border-dashed border-primary/20 flex gap-4 items-start">
+                <div class="size-6 shrink-0 rounded-full bg-primary/20 text-primary flex items-center justify-center mt-0.5">
+                    <span class="material-symbols-outlined text-[14px] font-bold">info</span>
+                </div>
+                <p class="text-xs text-primary/80 font-semibold leading-relaxed">Sharing allows others to view your notes in their "Shared" tab. You remain the owner and can revoke access anytime.</p>
+            </div>
+        </div>
+        <div class="px-6 py-5 border-t border-slate-100 flex justify-end gap-3 bg-slate-50/50">
+            <button onclick="closeShareModal()" class="px-6 py-3 rounded-xl text-slate-500 font-bold hover:bg-slate-100 transition-all active:scale-95">Cancel</button>
+            <button onclick="submitShare()" class="px-8 py-3 rounded-xl bg-primary text-white font-black hover:bg-primary-dark shadow-lg shadow-primary/20 transition-all hover:translate-y-[-2px] active:scale-95 flex items-center gap-2">
+                <span class="text-sm">Submit Share</span>
+                <span class="material-symbols-outlined text-[18px]">send</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="/JS/notes.js"></script>
+</body></html>

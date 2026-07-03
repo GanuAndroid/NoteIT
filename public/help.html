@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><style>html { zoom: 0.9; }</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Help &amp; Suggestions - CloudNotes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8b5cf6",
+                        "primary-dark": "#6d28d9",
+                        "background-light": "#fdfcff",
+                        "background-dark": "#1a1625",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen antialiased">
+<div class="flex flex-col min-h-screen">
+<!-- Header -->
+<header class="bg-white dark:bg-slate-900 border-b border-primary/10 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row items-center py-4 md:py-6 gap-6 justify-between">
+<div class="flex items-center gap-2 shrink-0">
+<h1 class="text-primary text-2xl md:text-3xl font-black tracking-tight uppercase">CloudNotes</h1>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest hidden sm:block">Notes</p>
+</div>
+<nav class="flex flex-wrap justify-center items-center gap-2 bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-xl shrink-0">
+<a class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-slate-600 hover:bg-white hover:text-primary transition-all" href="dashboard.html">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="text-sm font-bold hidden sm:block">Notes</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20 transition-all cursor-pointer" onclick="window.location.href='profile.html'">
+<span class="material-symbols-outlined fill-[1] text-[20px]">account_circle</span>
+<span class="text-sm font-bold hidden sm:block">Profile</span>
+</a>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1 py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-4xl mx-auto">
+<!-- Hero Section -->
+<div class="mb-12 text-center">
+<h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 tracking-tight">How can we help?</h2>
+<p class="mt-4 text-slate-500 dark:text-slate-400 text-lg font-medium max-w-2xl mx-auto">
+                        Find answers to frequently asked questions or send us your feedback to help us improve your experience.
+                    </p>
+</div>
+<!-- FAQ Section -->
+<section class="mb-16">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary text-2xl">quiz</span>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Frequently Asked Questions</h2>
+</div>
+<div class="space-y-4">
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 overflow-hidden transition-all hover:border-primary/30" open="">
+<summary class="flex cursor-pointer items-center justify-between py-5 outline-none">
+<span class="text-slate-900 dark:text-slate-100 font-bold">How do I share my notes?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pb-6 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-50 dark:border-slate-800 pt-4">
+                                You can share notes by clicking the 'Share' icon at the top right of any note. You'll be prompted to enter the recipient's email address or generate a public link.
+                            </div>
+</details>
+<details class="group rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 overflow-hidden transition-all hover:border-primary/30">
+<summary class="flex cursor-pointer items-center justify-between py-5 outline-none">
+<span class="text-slate-900 dark:text-slate-100 font-bold">What happens when I delete a note?</span>
+<span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pb-6 text-slate-500 dark:text-slate-400 text-sm leading-relaxed border-t border-slate-50 dark:border-slate-800 pt-4">
+                                When you delete a note you own, it is removed permanently from our servers. Action cannot be undone.
+                            </div>
+</details>
+</div>
+</section>
+<!-- Suggestions Section -->
+<section class="bg-primary/5 dark:bg-primary/10 rounded-2xl p-8 border border-primary/10">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">lightbulb</span>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Send Us a Suggestion</h2>
+</div>
+<form id="helpSupportForm" class="space-y-6">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                            Have an idea to make our platform better? We'd love to hear from you. Our product team reviews every suggestion.
+                        </p>
+<div class="space-y-2">
+<textarea required class="w-full rounded-xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none shadow-sm placeholder:text-slate-400 text-sm" id="suggestion" placeholder="Tell us what's on your mind..." rows="5"></textarea>
+</div>
+<div id="helpMsg" class="text-sm font-semibold text-center"></div>
+<div class="flex justify-end">
+<button type="submit" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]">
+<span>Submit Suggestion</span>
+<span class="material-symbols-outlined text-xl">send</span>
+</button>
+</div>
+</form>
+</section>
+</div>
+</main>
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-auto md:text-left text-center">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm">© 2024 CloudNotes. All rights reserved.</p>
+</div>
+</footer>
+</div>
+
+<script>
+    const API = "http://localhost:5000";
+    const user = JSON.parse(localStorage.getItem("data"));
+
+    if (!user) {
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("helpSupportForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const msgDiv = document.getElementById("helpMsg");
+        const suggestion = document.getElementById('suggestion').value.trim();
+
+        msgDiv.innerText = "Sending...";
+        msgDiv.className = "text-sm font-semibold text-center text-slate-500 mt-2 block w-full text-right pr-4";
+
+        try {
+            const res = await fetch(API + "/help-support", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: user.id, message: suggestion }),
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                msgDiv.innerText = "Suggestion sent successfully! Thank you.";
+                msgDiv.className = "text-sm font-semibold text-center text-green-500 mt-2 block w-full text-right pr-4";
+                document.getElementById('suggestion').value = '';
+            } else {
+                msgDiv.innerText = data.error || "Failed to submit.";
+                msgDiv.className = "text-sm font-semibold text-center text-red-500 mt-2 block w-full text-right pr-4";
+            }
+        } catch(err) {
+            msgDiv.innerText = "Error connecting to server.";
+            msgDiv.className = "text-sm font-semibold text-center text-red-500 mt-2 block w-full text-right pr-4";
+        }
+    });
+
+</script>
+</body></html>

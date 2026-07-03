@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head><style>html { zoom: 0.9; }</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CloudNotes - Sign Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8b5cf6",
+                        "accent": "#8b5cf6",
+                        "background-light": "#fdfcff",
+                        "background-dark": "#1a1625",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+<header class="bg-white dark:bg-slate-900 border-b border-primary/10 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col items-center py-6 gap-6">
+<div class="w-full flex items-center justify-between">
+<div class="hidden lg:block w-24"></div>
+<div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+<h2 class="text-primary text-3xl font-black tracking-tight uppercase">CloudNotes</h2>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest">Sign Up</p>
+</div>
+<div class="flex gap-2">
+<button onclick="window.location.href='login.html'" class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
+<span>Login</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center p-4 py-12">
+<div class="max-w-[480px] w-full flex flex-col gap-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-2xl overflow-hidden border border-primary/10">
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover" data-alt="A clean notebook with a pen on a wooden desk" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFVTzdtOaMjSo_bjqDg1QSahvG2-JYGRsMTBT9EvnM80RlFDFrLwpd9BkLZN5NdPZ92-9p2AryWAI75alUYCEwPvGmQuwdVAcc_CxDZ6vjBvDRRLU1Owp1LZ9U10IO8lDeYiTfm30h1mpOHRgOYaKs02fAn4jLDGUQjXMNaithV1BelVHI7K7R_bZpV8AoNDqJg-VI73-T0yQamFI9s1afClo1p7siTgrfo4lPmpXciw-_msOBkwZiWzTtKTZ4buo-yekXUM_5bfM");'>
+</div>
+<div class="p-8 flex flex-col gap-6">
+<div class="flex flex-col gap-2 text-center md:text-left">
+<h1 class="text-slate-900 dark:text-slate-100 text-3xl font-black leading-tight tracking-tight">Join the Community</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base font-medium">Start your journey with us today.</p>
+</div>
+<form id="signup-form" class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-normal">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person</span>
+<input id="regName" required class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 placeholder:text-slate-400 pl-12 pr-4 text-base focus:ring-4 focus:ring-primary/10 focus:border-primary/20 outline-none transition-all" placeholder="Enter your full name" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-normal">Mobile Number</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">smartphone</span>
+<input id="regMobile" required class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 placeholder:text-slate-400 pl-12 pr-4 text-base focus:ring-4 focus:ring-primary/10 focus:border-primary/20 outline-none transition-all" placeholder="1234567890" type="number"/>
+</div>
+<span id="mobileError" class="text-red-500 text-xs font-semibold"></span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-normal">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
+<input id="regEmail" required class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 placeholder:text-slate-400 pl-12 pr-4 text-base focus:ring-4 focus:ring-primary/10 focus:border-primary/20 outline-none transition-all" placeholder="example@mail.com" type="email"/>
+</div>
+<span id="emailError" class="text-red-500 text-xs font-semibold"></span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-normal">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+<input id="regPass" required class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border-2 border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 h-14 placeholder:text-slate-400 pl-12 pr-12 text-base focus:ring-4 focus:ring-primary/10 focus:border-primary/20 outline-none transition-all" placeholder="Create a password" type="password"/>
+</div>
+</div>
+<!-- Terms -->
+<div class="flex items-start gap-3 mt-2">
+<input class="mt-1 rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox" required/>
+<p class="text-sm text-slate-500 dark:text-slate-400 leading-normal">
+                                I agree to the <a class="text-primary font-bold hover:underline" href="#">Terms of Service</a> and <a class="text-primary font-bold hover:underline" href="#">Privacy Policy</a>.
+                            </p>
+</div>
+<div id="regMsg" class="mt-2 text-sm font-semibold text-center"></div>
+<button class="mt-2 flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-14 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:scale-[1.01] active:scale-[0.99] transition-all shadow-lg shadow-primary/30" type="submit">
+<span>Create Account</span>
+</button>
+</form>
+<div class="flex items-center justify-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Already have an account?</span>
+<a class="text-primary text-sm font-bold hover:underline" href="login.html">Sign In</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-slate-900 border-t border-primary/10 py-10 px-6 md:px-10">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-1">
+<div class="flex items-center gap-2">
+<h4 class="text-primary text-xl font-black tracking-tight uppercase">CloudNotes</h4>
+<span class="text-slate-400 text-sm">© 2024 CloudNotes. All rights reserved.</span>
+</div>
+</div>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Terms of Service</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Cookie Policy</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">Contact Support</a>
+</div>
+<div class="flex gap-4">
+<a aria-label="Social" class="size-9 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+<a aria-label="Share" class="size-9 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white transition-all shadow-sm" href="#">
+<span class="material-symbols-outlined text-lg">share</span>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    const API = "http://localhost:5000";
+    const signupForm = document.getElementById("signup-form");
+
+    if (localStorage.getItem("data")) {
+        window.location.href = "dashboard.html";
+    }
+
+    signupForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const name = document.getElementById("regName").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const mobile = document.getElementById("regMobile").value.trim();
+        const password = document.getElementById("regPass").value.trim();
+
+        document.getElementById("emailError").innerText = "";
+        document.getElementById("mobileError").innerText = "";
+        document.getElementById("regMsg").innerText = "";
+        document.getElementById("regMsg").className = "mt-2 text-sm font-semibold text-center";
+
+        try {
+            const res = await fetch(API + "/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, mobile, password }),
+            });
+            const data = await res.json();
+
+            if (res.status === 201) {
+                document.getElementById("regMsg").innerText = data.message;
+                document.getElementById("regMsg").className = "mt-2 text-sm font-semibold text-center text-green-500";
+                signupForm.reset();
+                setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+            } else {
+                if (data.field === "email") {
+                    document.getElementById("emailError").innerText = data.error;
+                } else if (data.field === "mobile") {
+                    document.getElementById("mobileError").innerText = data.error;
+                } else {
+                    document.getElementById("regMsg").innerText = data.error || "Registration failed";
+                    document.getElementById("regMsg").className = "mt-2 text-sm font-semibold text-center text-red-500";
+                }
+            }
+        } catch (err) {
+            document.getElementById("regMsg").innerText = "Server error. Please try again.";
+            document.getElementById("regMsg").className = "mt-2 text-sm font-semibold text-center text-red-500";
+        }
+    });
+</script>
+</body></html>

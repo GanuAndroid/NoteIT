@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"><head><style>html { zoom: 0.9; }</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8b5cf6",
+                        "primary-dark": "#6d28d9",
+                        "background-light": "#fdfcff",
+                        "background-dark": "#1a1625",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<title>Delete Account - CloudNotes</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen antialiased">
+<div class="flex flex-col min-h-screen">
+<!-- Header -->
+<header class="bg-white dark:bg-slate-900 border-b border-primary/10 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row items-center py-4 md:py-6 gap-6 justify-between">
+<div class="flex items-center gap-2 shrink-0">
+<h1 class="text-primary text-2xl md:text-3xl font-black tracking-tight uppercase">CloudNotes</h1>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest hidden sm:block">Notes</p>
+</div>
+<nav class="flex flex-wrap justify-center items-center gap-2 bg-slate-50 dark:bg-slate-800/50 p-1.5 rounded-xl shrink-0">
+<a class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg text-slate-600 hover:bg-white hover:text-primary transition-all" href="dashboard.html">
+<span class="material-symbols-outlined text-[20px]">description</span>
+<span class="text-sm font-bold hidden sm:block">Notes</span>
+</a>
+<a class="flex items-center gap-2 px-4 py-2 md:px-6 md:py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20 transition-all cursor-pointer" onclick="window.location.href='profile.html'">
+<span class="material-symbols-outlined fill-[1] text-[20px]">account_circle</span>
+<span class="text-sm font-bold hidden sm:block">Profile</span>
+</a>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1 py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-xl mx-auto">
+<!-- Title Section -->
+<div class="mb-8 text-center">
+<div class="flex items-center justify-center gap-3 mb-2">
+<span class="material-symbols-outlined text-red-500 text-4xl">no_accounts</span>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">Delete Account</h2>
+</div>
+<p class="text-slate-500 dark:text-slate-400 font-medium max-w-md mx-auto">
+                    We're sorry to see you go. Please note that this action is permanent and cannot be reversed.
+                </p>
+</div>
+<!-- Warning Card -->
+<div class="mb-8">
+<div class="flex flex-col overflow-hidden rounded-xl border border-red-100 dark:border-red-900/30 bg-white dark:bg-slate-900 shadow-sm">
+<div class="w-full bg-center bg-no-repeat aspect-[21/9] bg-cover" data-alt="Abstract warning background with deep red tones" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChCXs7CQx_FUvUMdb46zRTBulOE6E954YxWQ74qcE404G9d2gnLQ6AFyzRydKcpx6wCt45tRd9bRupixkB-webcCjKTJs6tUh9uvR3WQfv-ueqSmSl5y_-vh9tYQ56fRKpaKtvGqXSNS7aH7vqzPxJdqMVgKJY_errMB86N5P79fnvOLlfj39shgP-nuv5NO3Jf1K9KvM5q-jJSlqx1Wsvm0lbTaRIaZTEgqZPPYbYa6VNQOI_ye4CNWMWaB6rgbJoPg8DHzSNjVw");'></div>
+<div class="flex flex-col gap-4 p-6 bg-red-50/30 dark:bg-red-900/5">
+<div class="flex items-center gap-2 text-red-600 dark:text-red-400">
+<span class="material-symbols-outlined">warning</span>
+<p class="text-lg font-bold">Warning: Permanent Deletion</p>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            Deleting your account will immediately and permanently remove all your personal notes, curated favorites, and shared collaboration boards.
+                        </p>
+<div>
+</div>
+</div>
+</div>
+</div>
+<!-- Confirmation Form -->
+<div class="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-slate-200 dark:border-slate-800 p-8">
+<form id="deleteAccountForm" class="space-y-6">
+<div>
+<label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="password">Enter your password to confirm</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+<input class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-slate-400 text-sm" id="delPassword" required placeholder="Current Password" type="password"/>
+</div>
+</div>
+<div id="deleteMsg" class="text-sm font-semibold text-center"></div>
+<div class="flex flex-col gap-3 pt-2">
+<button class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-full transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 hover:scale-[1.02] active:scale-[0.98]" type="submit">
+<span class="material-symbols-outlined text-xl">delete_forever</span>
+                            Delete My Account
+                        </button>
+<button onclick="window.history.back()" class="w-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold py-3 px-6 rounded-full transition-all hover:bg-slate-200 dark:hover:bg-slate-700 text-sm" type="button">
+                            Cancel and Keep My Account
+                        </button>
+</div>
+</form>
+</div>
+</div>
+</main>
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 mt-auto text-center md:text-left">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm">© 2024 CloudNotes. All rights reserved.</p>
+</div>
+</footer>
+</div>
+
+<script>
+    const API = "http://localhost:5000";
+    const user = JSON.parse(localStorage.getItem("data"));
+
+    if (!user) {
+        window.location.href = "login.html";
+    }
+
+    document.getElementById("deleteAccountForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const msgDiv = document.getElementById("deleteMsg");
+        const password = document.getElementById('delPassword').value.trim();
+
+        if (!confirm("Are you absolutely sure you want to delete your account? This action is irreversible.")) {
+            return;
+        }
+
+        msgDiv.innerText = "Processing...";
+        msgDiv.className = "text-sm font-semibold text-center text-slate-500";
+
+        try {
+            const res = await fetch(API + "/delete-account", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: user.id, password }),
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                localStorage.removeItem("data");
+                msgDiv.innerText = "Account deleted. We are sorry to see you go.";
+                msgDiv.className = "text-sm font-semibold text-center text-green-500";
+                setTimeout(() => window.location.href = 'index.html', 1500);
+            } else {
+                msgDiv.innerText = data.error || "Failed to delete account.";
+                msgDiv.className = "text-sm font-semibold text-center text-red-500";
+            }
+        } catch(err) {
+            msgDiv.innerText = "Error connecting to server.";
+            msgDiv.className = "text-sm font-semibold text-center text-red-500";
+        }
+    });
+
+</script>
+</body></html>

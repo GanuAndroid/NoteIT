@@ -7,101 +7,103 @@ const User = require("../models/user")
 
 // Create a new note
 router.post("/", async (req, res) => {
-    try {
-        const { userId, title, content } = req.body;
-        console.log("Incoming request body:", req.body);
+  try {
+    const { userId, title, content } = req.body;
+    console.log("Incoming request body:", req.body);
 
-        if (!userId || !title || !content) {
-            return res.status(400).json({ error: "UserId, title, and content are required." });
-        }
-
-        const newNote = new Note({ userId, title, content, date: new Date() });
-        await newNote.save();
-
-        res.status(201).json({
-             status: 'success',
-             message: "Note saved successfully", 
-             data : newNote });
-    } catch (err) {
-        console.error("🔥 Error saving note:", err);
-        res.status(500).json({
-             status: 'error',
-             message: "Failed to save note", 
-             error: err.message });
+    if (!userId || !title || !content) {
+      return res.status(400).json({ error: "UserId, title, and content are required." });
     }
+
+    const newNote = new Note({ userId, title, content, date: new Date() });
+    await newNote.save();
+
+    res.status(201).json({
+      status: 'success',
+      message: "Note saved successfully",
+      data: newNote
+    });
+  } catch (err) {
+    console.error("🔥 Error saving note:", err);
+    res.status(500).json({
+      status: 'error',
+      message: "Failed to save note",
+      error: err.message
+    });
+  }
 });
 
 // Get notes for a specific user
 router.get("/user/:userId", async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const notes = await Note.find({ userId }).sort({ date: -1 });
+  try {
+    const { userId } = req.params;
+    const notes = await Note.find({ userId }).sort({ date: -1 });
 
-        if (!notes.length) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'No notes found for this user.',
-                data: null
-            });
-        }
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Notes fetched successfully.',
-            data: notes
-        });
-    } catch (err) {
-        console.error("Error fetching user notes:", err);
-        res.status(500).json({
-            status: 'error',
-            message: 'Failed to fetch user notes',
-            error: err.message || 'Unknown error'
-        });
+    if (!notes.length) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'No notes found for this user.',
+        data: null
+      });
     }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Notes fetched successfully.',
+      data: notes
+    });
+  } catch (err) {
+    console.error("Error fetching user notes:", err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to fetch user notes',
+      error: err.message || 'Unknown error'
+    });
+  }
 });
 
 // Update a specific note for a user
 router.put("/:userId/:noteId", async (req, res) => {
-    try {
-        const { userId, noteId } = req.params;
-        const { title, content } = req.body;
+  try {
+    const { userId, noteId } = req.params;
+    const { title, content } = req.body;
 
-        if (!title || !content) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Title and content are required.',
-                data: null
-            });
-        }
-
-        // Update only the note that belongs to the given user
-        const updatedNote = await Note.findOneAndUpdate(
-            { _id: noteId, userId: userId },
-            { title, content, date: new Date() },
-            { new: true } // return the updated document
-        );
-
-        if (!updatedNote) {
-            return res.status(404).json({
-                status: 'error',
-                message: "Note not found or you don't have permission to edit it.",
-                data: null
-            });
-        }
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Note updated successfully',
-            data: updatedNote
-        });
-    } catch (err) {
-        console.error("🔥 Error updating note:", err);
-        res.status(500).json({
-            status: 'error',
-            message: 'Failed to update note',
-            error: err.message || 'Unknown error'
-        });
+    if (!title || !content) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Title and content are required.',
+        data: null
+      });
     }
+
+    // Update only the note that belongs to the given user
+    const updatedNote = await Note.findOneAndUpdate(
+      { _id: noteId, userId: userId },
+      { title, content, date: new Date() },
+      { new: true } // return the updated document
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({
+        status: 'error',
+        message: "Note not found or you don't have permission to edit it.",
+        data: null
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Note updated successfully',
+      data: updatedNote
+    });
+  } catch (err) {
+    console.error("🔥 Error updating note:", err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to update note',
+      error: err.message || 'Unknown error'
+    });
+  }
 });
 
 // Delete a specific note by its ID
@@ -110,7 +112,7 @@ const { successResponse, errorResponse } = require("../utils/apiResponse");
 // Delete a specific note by its ID
 router.delete("/:userId/:noteId", async (req, res) => {
   try {
-     const { userId, noteId } = req.params;
+    const { userId, noteId } = req.params;
 
 
     if (!userId || !noteId) {
@@ -118,13 +120,13 @@ router.delete("/:userId/:noteId", async (req, res) => {
     }
 
     // Ensure the note belongs to the user
-        const deletedNote = await Note.findOne({ _id: noteId, userId: userId });
+    const deletedNote = await Note.findOne({ _id: noteId, userId: userId });
 
     if (!deletedNote) {
       return errorResponse(res, "Note not found or you don't have permission to delete it", 404);
     }
 
-  await Note.findByIdAndDelete(noteId);
+    await Note.findByIdAndDelete(noteId);
 
     return successResponse(res, "Note deleted successfully", deletedNote, 200);
   } catch (err) {
@@ -136,37 +138,37 @@ router.delete("/:userId/:noteId", async (req, res) => {
 
 // Add the toggle favorite route to your router
 router.patch("/:userId/:noteId/favorite", async (req, res) => {
-    try {
-        const { userId, noteId } = req.params;
+  try {
+    const { userId, noteId } = req.params;
 
-        // Find the note by ID and ensure it belongs to the user
-        const note = await Note.findOne({ _id: noteId, userId });
+    // Find the note by ID and ensure it belongs to the user
+    const note = await Note.findOne({ _id: noteId, userId });
 
-        if (!note) {
-            return res.status(404).json({
-                status: 'error',
-                message: "Note not found or you don't have permission to modify it.",
-                data: null
-            });
-        }
-
-        // Toggle the favorite status of the note
-        note.isFavorite = !note.isFavorite;
-        await note.save();
-
-        res.status(200).json({
-            status: 'success',
-            message: `Note ${note.isFavorite ? 'marked as favorite' : 'removed from favorites'}`,
-            data: note
-        });
-    } catch (err) {
-        console.error(" Error updating favorite status:", err);
-        res.status(500).json({
-            status: 'error',
-            message: 'Failed to update favorite status',
-            error: err.message || 'Unknown error'
-        });
+    if (!note) {
+      return res.status(404).json({
+        status: 'error',
+        message: "Note not found or you don't have permission to modify it.",
+        data: null
+      });
     }
+
+    // Toggle the favorite status of the note
+    note.isFavorite = !note.isFavorite;
+    await note.save();
+
+    res.status(200).json({
+      status: 'success',
+      message: `Note ${note.isFavorite ? 'marked as favorite' : 'removed from favorites'}`,
+      data: note
+    });
+  } catch (err) {
+    console.error(" Error updating favorite status:", err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to update favorite status',
+      error: err.message || 'Unknown error'
+    });
+  }
 });
 
 
@@ -174,31 +176,31 @@ router.patch("/:userId/:noteId/favorite", async (req, res) => {
 
 // Get all favorite notes for a user
 router.get("/:userId/favorites", async (req, res) => {
-    try {
-        const { userId } = req.params;
-        const favoriteNotes = await Note.find({ userId, isFavorite: true }).sort({ date: -1 });
+  try {
+    const { userId } = req.params;
+    const favoriteNotes = await Note.find({ userId, isFavorite: true }).sort({ date: -1 });
 
-        if (!favoriteNotes.length) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'No favorite notes found for this user.',
-                data: null
-            });
-        }
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Favorite notes fetched successfully.',
-            data: favoriteNotes
-        });
-    } catch (err) {
-        console.error("🔥 Error fetching favorite notes:", err);
-        res.status(500).json({
-            status: 'error',
-            message: 'Failed to fetch favorite notes',
-            error: err.message || 'Unknown error'
-        });
+    if (!favoriteNotes.length) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'No favorite notes found for this user.',
+        data: null
+      });
     }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Favorite notes fetched successfully.',
+      data: favoriteNotes
+    });
+  } catch (err) {
+    console.error("🔥 Error fetching favorite notes:", err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to fetch favorite notes',
+      error: err.message || 'Unknown error'
+    });
+  }
 });
 
 
@@ -340,59 +342,59 @@ router.post("/share-note", async (req, res) => {
     }
 
     // 7️⃣ Create share entry
-   // 7️⃣ Create share entry
-const sharedNote = new SharedNote({
-  noteId,
-  sharedBy: ownerId,
-  sharedTo: userToShare._id,
-  permission: permission || "read",
-});
+    // 7️⃣ Create share entry
+    const sharedNote = new SharedNote({
+      noteId,
+      sharedBy: ownerId,
+      sharedTo: userToShare._id,
+      permission: permission || "read",
+    });
 
-await sharedNote.save();
+    await sharedNote.save();
 
-// 🔥 Populate just like shared-notes list
-const populatedShare = await SharedNote.findById(sharedNote._id)
-  .populate("noteId")
-  .populate("sharedBy", "name mobile email")
-  .populate("sharedTo", "name mobile email");
+    // 🔥 Populate just like shared-notes list
+    const populatedShare = await SharedNote.findById(sharedNote._id)
+      .populate("noteId")
+      .populate("sharedBy", "name mobile email")
+      .populate("sharedTo", "name mobile email");
 
-// Format exactly like shared-notes response
-const isSharedByMe = populatedShare.sharedBy._id.toString() === ownerId;
+    // Format exactly like shared-notes response
+    const isSharedByMe = populatedShare.sharedBy._id.toString() === ownerId;
 
-const formattedData = {
-  shareId: populatedShare._id,
-  noteId: populatedShare.noteId?._id,
-  title: populatedShare.noteId?.title,
-  contentPreview: populatedShare.noteId?.content?.substring(0, 100),
-  noteCreatedAt:
-    populatedShare.noteId?.createdAt ||
-    populatedShare.noteId?.date,
+    const formattedData = {
+      shareId: populatedShare._id,
+      noteId: populatedShare.noteId?._id,
+      title: populatedShare.noteId?.title,
+      contentPreview: populatedShare.noteId?.content?.substring(0, 100),
+      noteCreatedAt:
+        populatedShare.noteId?.createdAt ||
+        populatedShare.noteId?.date,
 
-  sharedAt: populatedShare.createdAt,
-  permission: populatedShare.permission,
+      sharedAt: populatedShare.createdAt,
+      permission: populatedShare.permission,
 
-  sharedType: isSharedByMe
-    ? "shared_by_me"
-    : "shared_to_me",
+      sharedType: isSharedByMe
+        ? "shared_by_me"
+        : "shared_to_me",
 
-  sharedBy: {
-    id: populatedShare.sharedBy?._id,
-    name: populatedShare.sharedBy?.name,
-    mobile: populatedShare.sharedBy?.mobile,
-  },
+      sharedBy: {
+        id: populatedShare.sharedBy?._id,
+        name: populatedShare.sharedBy?.name,
+        mobile: populatedShare.sharedBy?.mobile,
+      },
 
-  sharedTo: {
-    id: populatedShare.sharedTo?._id,
-    name: populatedShare.sharedTo?.name,
-    mobile: populatedShare.sharedTo?.mobile,
-  },
-};
+      sharedTo: {
+        id: populatedShare.sharedTo?._id,
+        name: populatedShare.sharedTo?.name,
+        mobile: populatedShare.sharedTo?.mobile,
+      },
+    };
 
-return res.status(200).json({
-  status: "success",
-  message: "Note shared successfully",
-  data: formattedData,
-});
+    return res.status(200).json({
+      status: "success",
+      message: "Note shared successfully",
+      data: formattedData,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -404,26 +406,32 @@ return res.status(200).json({
 
 
 router.delete("/revoke-share/:shareId/:ownerId", async (req, res) => {
+  console.log("🛠️ Revoke Share Request received:", req.params);
   try {
     const { shareId, ownerId } = req.params;
 
-    if (!shareId || !ownerId) {
+    if (!shareId || !ownerId || shareId === "undefined" || ownerId === "undefined") {
+      console.warn("⚠️ Invalid Revoke Params:", { shareId, ownerId });
       return res.status(400).json({
         status: "error",
-        message: "shareId and ownerId are required"
+        message: "Valid shareId and ownerId are required"
       });
     }
 
     const sharedNote = await SharedNote.findById(shareId);
 
     if (!sharedNote) {
+      console.warn("⚠️ Shared record not found for ID:", shareId);
       return res.status(404).json({
         status: "error",
         message: "Shared record not found"
       });
     }
 
+    console.log("📝 Found shared record:", { sharedBy: sharedNote.sharedBy, requestingOwner: ownerId });
+
     if (sharedNote.sharedBy.toString() !== ownerId) {
+      console.error("🚫 Permission Denied: Only owner can revoke.");
       return res.status(403).json({
         status: "error",
         message: "Only owner can revoke access"
@@ -431,6 +439,7 @@ router.delete("/revoke-share/:shareId/:ownerId", async (req, res) => {
     }
 
     await SharedNote.findByIdAndDelete(shareId);
+    console.log("✅ Share revoked successfully:", shareId);
 
     return res.status(200).json({
       status: "success",
@@ -438,7 +447,7 @@ router.delete("/revoke-share/:shareId/:ownerId", async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("🔥 Error in revoke-share:", error);
     res.status(500).json({
       status: "error",
       message: error.message
