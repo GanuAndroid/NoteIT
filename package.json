@@ -22,11 +22,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GanuAndroid/NoteIT.git"
+    "url": "git+https://github.com/ganeshsharma-dev/NoteIT.git"
   },
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/GanuAndroid/NoteIT/issues"
+    "url": "https://github.com/ganeshsharma-dev/NoteIT/issues"
   },
-  "homepage": "https://github.com/GanuAndroid/NoteIT#readme"
+  "homepage": "https://github.com/ganeshsharma-dev/NoteIT#readme"
 }
